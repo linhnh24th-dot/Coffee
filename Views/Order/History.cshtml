@@ -1,0 +1,52 @@
+@model List<Order>
+@{
+    ViewData["Title"] = "Lịch sử đơn hàng";
+}
+<div class="container-xxl py-5">
+    <div class="container">
+        <h1 class="display-6 mb-4">Lịch sử đơn hàng của bạn</h1>
+
+        @if (Model == null || !Model.Any())
+        {
+            <div class="text-center py-5">
+                <i class="fa fa-shopping-cart fa-3x text-muted mb-3 d-block"></i>
+                <p class="text-muted">Bạn chưa có đơn hàng nào.</p>
+                <a asp-area="" asp-controller="Product" asp-action="Index"
+                   class="btn btn-primary rounded-pill px-5">Mua sắm ngay</a>
+            </div>
+        }
+        else
+        {
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Mã đơn</th>
+                        <th>Ngày đặt</th>
+                        <th>Trạng thái</th>
+                        <th>Tổng tiền</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var o in Model)
+                    {
+                        <tr>
+                            <td>#@o.Id</td>
+                            <td>@o.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>
+                                <span class="badge @(o.Status == OrderStatus.HoanThanh ? "bg-success" : o.Status == OrderStatus.DaHuy ? "bg-danger" : "bg-warning text-dark")">
+                                    @o.Status
+                                </span>
+                            </td>
+                            <td>@o.Total.ToString("N0") VND</td>
+                            <td>
+                                <a asp-area="" asp-controller="Order" asp-action="Details" asp-route-id="@o.Id"
+                                   class="btn btn-sm btn-outline-primary">Chi tiết</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

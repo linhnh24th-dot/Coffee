@@ -1,0 +1,32 @@
+@model List<Article>
+@{
+    ViewData["Title"] = "Quản lý tin tức";
+}
+<div class="mb-3">
+    <a asp-area="Admin" asp-controller="Article" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>Thêm tin tức</a>
+</div>
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
+            <thead><tr><th>#</th><th>Ảnh</th><th>Tiêu đề</th><th>Chuyên mục</th><th>Ngày tạo</th><th style="width:150px"></th></tr></thead>
+            <tbody>
+                @foreach (var a in Model)
+                {
+                    <tr>
+                        <td>@a.Id</td>
+                        <td><img src="~/img/@(a.Image ?? "article.jpg")" width="50" /></td>
+                        <td>@a.Title</td>
+                        <td>@a.Category</td>
+                        <td>@a.CreatedDate.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <a asp-area="Admin" asp-controller="Article" asp-action="Edit" asp-route-id="@a.Id" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i></a>
+                            <form asp-area="Admin" asp-controller="Article" asp-action="Delete" asp-route-id="@a.Id" method="post" class="d-inline" onsubmit="return confirm('Xóa tin tức này?');">
+                                <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

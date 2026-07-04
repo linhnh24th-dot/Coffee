@@ -1,0 +1,38 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+<div class="container-xxl py-5">
+    <div class="container" style="max-width: 480px;">
+        <div class="section-title text-center mb-4 wow fadeInUp">
+            <p class="fs-5 fw-medium fst-italic text-primary">Chào mừng</p>
+            <h1 class="display-6">Đăng nhập</h1>
+        </div>
+        <div class="bg-light rounded p-4 p-md-5 wow fadeIn">
+            <form asp-area="" asp-controller="Account" asp-action="Login" method="post">
+                <input type="hidden" asp-for="ReturnUrl" />
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Username" class="form-label fw-bold">Tên đăng nhập</label>
+                    <input asp-for="Username" class="form-control py-3" placeholder="Nhập tên đăng nhập" autofocus />
+                    <span asp-validation-for="Username" class="text-danger small"></span>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="Password" class="form-label fw-bold">Mật khẩu</label>
+                    <input asp-for="Password" class="form-control py-3" placeholder="Nhập mật khẩu" />
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+                <button type="submit" class="btn btn-primary rounded-pill w-100 py-3 mb-3">
+                    <i class="fa fa-sign-in-alt me-2"></i>Đăng nhập
+                </button>
+            </form>
+            <p class="text-center mb-0 mt-3">
+                Chưa có tài khoản?
+                <a asp-area="" asp-controller="Account" asp-action="Register" class="text-primary fw-bold">
+                    Đăng ký ngay
+                </a>
+            </p>
+        </div>
+    </div>
+</div>

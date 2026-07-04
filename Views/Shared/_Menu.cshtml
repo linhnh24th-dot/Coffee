@@ -1,0 +1,45 @@
+@* FIX LỖI 4: Tất cả link phải có asp-area="" để nói rõ "không thuộc Area nào"
+   Nếu không có asp-area="", Tag Helper có thể kế thừa area từ request hiện tại
+   và sinh ra đường dẫn sai (VD: /Admin/Home/About thay vì /Home/About) *@
+<div class="container-fluid bg-white sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
+                <h1 class="m-0 text-primary"><i class="fa fa-mug-hot me-2"></i>HyliCoffee</h1>
+            </a>
+            <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-item nav-link">Home</a>
+                    <a asp-area="" asp-controller="Home" asp-action="About" class="nav-item nav-link">About</a>
+                    <a asp-area="" asp-controller="Product" asp-action="Index" class="nav-item nav-link">Products</a>
+                    <a asp-area="" asp-controller="Product" asp-action="Store" class="nav-item nav-link">Store</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Contact" class="nav-item nav-link">Contact</a>
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("Admin"))
+                        {
+                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="nav-item nav-link text-warning">Admin Panel</a>
+                        }
+                        <a asp-area="" asp-controller="Order" asp-action="History" class="nav-item nav-link">Đơn hàng của tôi</a>
+                        <a asp-area="" asp-controller="Account" asp-action="Logout" class="nav-item nav-link">
+                            Đăng xuất (@User.FindFirst("FullName")?.Value)
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-area="" asp-controller="Account" asp-action="Login" class="nav-item nav-link">Đăng nhập</a>
+                        <a asp-area="" asp-controller="Account" asp-action="Register" class="nav-item nav-link">Đăng ký</a>
+                    }
+                </div>
+                <div class="border-start ps-4 d-none d-lg-block">
+                    <a asp-area="" asp-controller="Cart" asp-action="Index" class="btn btn-sm p-0 position-relative">
+                        <i class="fa fa-shopping-cart fa-lg"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>

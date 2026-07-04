@@ -1,0 +1,17 @@
+@* Offcanvas giỏ hàng hiển thị nhanh - bấm icon giỏ hàng trên navbar để mở *@
+<div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title"><i class="fa fa-shopping-cart me-2"></i>Giỏ hàng</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+        <p class="text-muted">Xem và quản lý giỏ hàng của bạn.</p>
+        <div class="mt-auto">
+            @* asp-area="" bắt buộc - CartController nằm ở root, không phải Area *@
+            <a asp-area="" asp-controller="Cart" asp-action="Index"
+               class="btn btn-primary rounded-pill w-100 py-3">
+                <i class="fa fa-shopping-cart me-2"></i>Xem giỏ hàng
+            </a>
+        </div>
+    </div>
+</div>

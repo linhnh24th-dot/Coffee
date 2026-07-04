@@ -1,0 +1,73 @@
+@{
+    ViewData["Title"] = "Giới thiệu";
+}
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <h1 class="display-3 text-white animated slideInRight">Giới thiệu</h1>
+        <nav aria-label="breadcrumb animated slideInRight">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Giới thiệu</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                <div class="row g-3">
+                    <div class="col-6 text-end">
+                        <img class="img-fluid bg-white w-100 mb-3" src="~/img/hoa.jpg" alt="HyliCoffee">
+                        <img class="img-fluid bg-white w-50"       src="~/img/do.jpg"  alt="HyliCoffee">
+                    </div>
+                    <div class="col-6">
+                        <img class="img-fluid bg-white w-50 mb-3" src="~/img/tim.jpg"    alt="HyliCoffee">
+                        <img class="img-fluid bg-white w-100"     src="~/img/matcha.jpg" alt="HyliCoffee">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.3s">
+                <div class="section-title">
+                    <p class="fs-5 fw-medium fst-italic text-primary">About Us</p>
+                    <h1 class="display-6">Tại sao HyliCoffee ra đời?</h1>
+                </div>
+                <p class="mb-4">
+                    HyliCoffee là quán cà phê &amp; trà mang phong cách dân dã pha trộn cùng sự sáng tạo hiện đại.
+                    Chúng tôi không bán những gì "quen thuộc" — mỗi món nước tại đây là một cuộc thử nghiệm đầy
+                    ngẫu hứng nhưng cực kỳ khắt khe về chất lượng.
+                </p>
+                <div class="row g-3 mb-4">
+                    <div class="col-sm-4">
+                        <img class="img-fluid bg-white w-100" src="~/img/cafe.jpg" alt="Cà phê">
+                    </div>
+                    <div class="col-sm-8">
+                        <h5>Chọn lọc nguyên liệu</h5>
+                        <p class="mb-0">Từng hạt cà phê, từng lá trà đều được chọn lọc kỹ lưỡng trước khi đến tay khách hàng.</p>
+                    </div>
+                </div>
+                <div class="border-top mb-4"></div>
+                <div class="row g-3">
+                    <div class="col-sm-8">
+                        <h5>Sáng tạo không ngừng</h5>
+                        <p class="mb-0">
+                            Từ "Vú Sữa Dầm" đến "Matcha Popcorn" — chúng tôi luôn tìm cách mang đến
+                            cảm giác mới lạ và tuyệt vời cho từng tách nước.
+                        </p>
+                    </div>
+                    <div class="col-sm-4">
+                        <img class="img-fluid bg-white w-100" src="~/img/bap.jpg" alt="Đặc biệt">
+                    </div>
+                </div>
+                <a asp-area="" asp-controller="Product" asp-action="Index"
+                   class="btn btn-primary rounded-pill py-3 px-5 mt-4">
+                    Xem sản phẩm <i class="fa fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

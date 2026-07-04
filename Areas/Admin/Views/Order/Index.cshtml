@@ -1,0 +1,25 @@
+@model List<Order>
+@{
+    ViewData["Title"] = "Quản lý đơn hàng";
+}
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
+            <thead><tr><th>Mã</th><th>Khách hàng</th><th>SĐT</th><th>Ngày đặt</th><th>Trạng thái</th><th>Tổng tiền</th><th style="width:120px"></th></tr></thead>
+            <tbody>
+                @foreach (var o in Model)
+                {
+                    <tr>
+                        <td>#@o.Id</td>
+                        <td>@o.Receiver</td>
+                        <td>@o.Phone</td>
+                        <td>@o.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td><span class="badge text-bg-info">@o.Status</span></td>
+                        <td>@o.Total.ToString("N0") VND</td>
+                        <td><a asp-area="Admin" asp-controller="Order" asp-action="Details" asp-route-id="@o.Id" class="btn btn-sm btn-primary">Chi tiết</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,83 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <div class="small-box text-bg-primary">
+            <div class="inner">
+                <h3>@Model.TotalProducts</h3>
+                <p>Sản phẩm</p>
+            </div>
+            <i class="bi bi-cup-hot small-box-icon"></i>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box text-bg-success">
+            <div class="inner">
+                <h3>@Model.TotalOrders</h3>
+                <p>Đơn hàng (@Model.PendingOrders chờ xử lý)</p>
+            </div>
+            <i class="bi bi-receipt small-box-icon"></i>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box text-bg-warning">
+            <div class="inner">
+                <h3>@Model.TotalUsers</h3>
+                <p>Khách hàng</p>
+            </div>
+            <i class="bi bi-people small-box-icon"></i>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box text-bg-danger">
+            <div class="inner">
+                <h3>@Model.TotalRevenue.ToString("N0")</h3>
+                <p>Doanh thu (VND, đơn hoàn thành)</p>
+            </div>
+            <i class="bi bi-cash-coin small-box-icon"></i>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-header"><h3 class="card-title">Đơn hàng gần đây</h3></div>
+            <div class="card-body p-0">
+                <table class="table mb-0">
+                    <thead><tr><th>Mã</th><th>Khách hàng</th><th>Ngày đặt</th><th>Trạng thái</th><th>Tổng tiền</th></tr></thead>
+                    <tbody>
+                        @foreach (var o in Model.RecentOrders)
+                        {
+                            <tr>
+                                <td><a asp-area="Admin" asp-controller="Order" asp-action="Details" asp-route-id="@o.Id">#@o.Id</a></td>
+                                <td>@o.User?.FullName</td>
+                                <td>@o.OrderDate.ToString("dd/MM/yyyy")</td>
+                                <td>@o.Status</td>
+                                <td>@o.Total.ToString("N0") VND</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header"><h3 class="card-title">Phản hồi mới nhất</h3></div>
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush">
+                    @foreach (var f in Model.RecentFeedbacks)
+                    {
+                        <li class="list-group-item">
+                            <strong>@f.Name</strong> (@f.Email)<br />
+                            <small class="text-muted">@f.Content</small>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

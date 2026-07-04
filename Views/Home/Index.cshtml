@@ -1,0 +1,157 @@
+@{
+    ViewData["Title"] = "Trang chủ";
+    var featuredProducts = ViewBag.FeaturedProducts as List<Product> ?? new List<Product>();
+}
+
+<!-- Carousel Start -->
+<div class="container-fluid px-0 mb-5">
+    <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="w-100" src="~/img/01.jpg" alt="HyliCoffee Banner">
+                <div class="carousel-caption">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7 text-center">
+                                <p class="fs-4 text-white animated zoomIn">Welcome to <strong class="text-dark">HyliCoffee</strong></p>
+                                <h1 class="display-1 text-dark mb-4 animated zoomIn">Sản Xuất Trà &amp; Cà Phê Nguyên Chất</h1>
+                                <a href="tel:0999686822" class="btn btn-light rounded-pill py-3 px-5 animated zoomIn">Hotline: 0999686822</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="w-100" src="~/img/02.jpg" alt="HyliCoffee Banner 2">
+                <div class="carousel-caption">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7 text-center">
+                                <p class="fs-4 text-white animated zoomIn">Welcome to <strong class="text-dark">HyliCoffee</strong></p>
+                                <h1 class="display-1 text-dark mb-4 animated zoomIn">Sản Xuất Trà &amp; Cà Phê Nguyên Chất</h1>
+                                <a asp-area="" asp-controller="Product" asp-action="Index"
+                                   class="btn btn-light rounded-pill py-3 px-5 animated zoomIn">Khám phá ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#header-carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+<!-- Carousel End -->
+
+<!-- About Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    <div class="col-6 text-end">
+                        <img class="img-fluid bg-white w-100 mb-3 wow fadeIn" data-wow-delay="0.1s" src="~/img/hoa.jpg" alt="">
+                        <img class="img-fluid bg-white w-50 wow fadeIn"       data-wow-delay="0.2s" src="~/img/do.jpg"  alt="">
+                    </div>
+                    <div class="col-6">
+                        <img class="img-fluid bg-white w-50 mb-3 wow fadeIn" data-wow-delay="0.3s" src="~/img/tim.jpg"    alt="">
+                        <img class="img-fluid bg-white w-100 wow fadeIn"     data-wow-delay="0.4s" src="~/img/matcha.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                <div class="section-title">
+                    <p class="fs-5 fw-medium fst-italic text-primary">About Us</p>
+                    <h1 class="display-6">Tại sao quán ra đời? Tại sao lại chọn những món "lạ"?</h1>
+                </div>
+                <div class="row g-3 mb-4">
+                    <div class="col-sm-4">
+                        <img class="img-fluid bg-white w-100" src="~/img/cafe.jpg" alt="">
+                    </div>
+                    <div class="col-sm-8">
+                        <h5>Giá trị cốt lõi &amp; Sự khác biệt</h5>
+                        <p class="mb-0">Quy trình chọn hạt cafe, sự tỉ mỉ khi sáng tạo công thức món mới.</p>
+                    </div>
+                </div>
+                <div class="border-top mb-4"></div>
+                <div class="row g-3">
+                    <div class="col-sm-8">
+                        <h5>Quán luôn mang đến cảm giác mới lạ và tuyệt vời.</h5>
+                        <p class="mb-0">Chúng mình không bán những gì "quen thuộc". Mỗi món nước tại đây là một cuộc thử nghiệm đầy ngẫu hứng nhưng cực kỳ khắt khe về chất lượng.</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <img class="img-fluid bg-white w-100" src="~/img/bap.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About End -->
+
+<!-- Featured Products Start -->
+<div class="container-fluid product py-5 my-5">
+    <div class="container py-5">
+        <div class="section-title text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <p class="fs-5 fw-medium fst-italic text-primary">Our Products</p>
+            <h1 class="display-6">Quán chúng tôi là sự pha trộn giữa nét truyền thống, sự dân dã và sự phá cách hiện đại</h1>
+        </div>
+        <div class="row g-4" id="productList">
+            @if (featuredProducts.Any())
+            {
+                foreach (var p in featuredProducts)
+                {
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <a asp-area="" asp-controller="Product" asp-action="Details" asp-route-id="@p.Id"
+                           class="d-block product-item rounded">
+                            <img src="~/img/@(p.Image ?? "cfden.jpg")" class="img-fluid" alt="@p.Name">
+                            <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
+                                <h4 class="text-primary">@p.Name</h4>
+                                <h5 class="text-primary">@p.Price.ToString("N0") VND</h5>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center text-muted py-5">
+                    <i class="fa fa-cup fa-3x mb-3 d-block"></i>
+                    Chưa có sản phẩm nổi bật.
+                    Vào <a asp-area="Admin" asp-controller="Product" asp-action="Index">trang Admin → Sản phẩm</a>,
+                    thêm sản phẩm và tích vào ô "Hiển thị nổi bật".
+                </div>
+            }
+        </div>
+        <div class="text-center mt-5 wow fadeInUp" data-wow-delay="0.2s">
+            <a asp-area="" asp-controller="Product" asp-action="Index"
+               class="btn btn-primary rounded-pill py-3 px-5">
+                Xem tất cả sản phẩm <i class="fa fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!-- Featured Products End -->
+
+<!-- Store Promo Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="section-title text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <p class="fs-5 fw-medium fst-italic text-primary">Online Store</p>
+            <h1 class="display-6">Muốn không stress ư, ở đây còn bán tranh meme "Hoàng Thượng" nữa nè!!!</h1>
+        </div>
+        <div class="text-center mt-4 wow fadeInUp" data-wow-delay="0.2s">
+            <a asp-area="" asp-controller="Product" asp-action="Store"
+               class="btn btn-primary rounded-pill py-3 px-5">
+                Vào Store ngay <i class="fa fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!-- Store Promo End -->

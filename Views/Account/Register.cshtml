@@ -1,0 +1,58 @@
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Đăng ký tài khoản";
+}
+<div class="container-xxl py-5">
+    <div class="container" style="max-width: 600px;">
+        <div class="section-title text-center mb-4 wow fadeInUp">
+            <p class="fs-5 fw-medium fst-italic text-primary">Tham gia cùng chúng tôi</p>
+            <h1 class="display-6">Đăng ký tài khoản</h1>
+        </div>
+        <div class="bg-light rounded p-4 p-md-5 wow fadeIn">
+            <form asp-area="" asp-controller="Account" asp-action="Register" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="Username" class="form-label fw-bold">Tên đăng nhập</label>
+                        <input asp-for="Username" class="form-control" placeholder="Tối thiểu 4 ký tự" />
+                        <span asp-validation-for="Username" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="FullName" class="form-label fw-bold">Họ và tên</label>
+                        <input asp-for="FullName" class="form-control" placeholder="Nguyễn Văn A" />
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Password" class="form-label fw-bold">Mật khẩu</label>
+                        <input asp-for="Password" class="form-control" placeholder="Tối thiểu 6 ký tự" />
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="ConfirmPassword" class="form-label fw-bold">Xác nhận mật khẩu</label>
+                        <input asp-for="ConfirmPassword" class="form-control" placeholder="Nhập lại mật khẩu" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Phone" class="form-label fw-bold">Số điện thoại</label>
+                        <input asp-for="Phone" class="form-control" placeholder="0900 000 000" />
+                        <span asp-validation-for="Phone" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Email" class="form-label fw-bold">Email</label>
+                        <input asp-for="Email" class="form-control" placeholder="example@email.com" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary rounded-pill w-100 py-3">
+                            <i class="fa fa-user-plus me-2"></i>Tạo tài khoản
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <p class="text-center mb-0 mt-3">
+                Đã có tài khoản?
+                <a asp-area="" asp-controller="Account" asp-action="Login" class="text-primary fw-bold">Đăng nhập</a>
+            </p>
+        </div>
+    </div>
+</div>

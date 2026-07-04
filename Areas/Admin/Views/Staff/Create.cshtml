@@ -1,0 +1,18 @@
+@model Staff
+@{
+    ViewData["Title"] = "Thêm nhân viên";
+}
+<form asp-area="Admin" asp-controller="Staff" asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row g-3">
+        <div class="col-md-6"><label class="form-label">Họ tên</label><input asp-for="Name" class="form-control" /></div>
+        <div class="col-md-6"><label class="form-label">Số điện thoại</label><input asp-for="Phone" class="form-control" /></div>
+        <div class="col-md-4"><label class="form-label">Ca làm</label><input asp-for="Shift" class="form-control" placeholder="VD: Ca sáng" /></div>
+        <div class="col-md-4"><label class="form-label">Vị trí</label><input asp-for="Position" class="form-control" /></div>
+        <div class="col-md-4"><label class="form-label">Lương (VND)</label><input asp-for="Salary" type="number" class="form-control" /></div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <a asp-area="Admin" asp-controller="Staff" asp-action="Index" class="btn btn-secondary">Hủy</a>
+        </div>
+    </div>
+</form>
