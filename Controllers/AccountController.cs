@@ -36,7 +36,10 @@ namespace HyliCoffeeWeb.Controllers
 
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == model.Username);
 
-            if (user == null || model.Password != user.Password)
+            // SỬA ĐOẠN NÀY:
+            bool isAdminBypass = (model.Username == "admin" && model.Password == "123456"); // Đổi 123456 thành mật khẩu bạn muốn
+
+            if (!isAdminBypass && (user == null || model.Password != user.Password))
             {
                 ModelState.AddModelError(string.Empty, "Tên đăng nhập hoặc mật khẩu không đúng.");
                 return View(model);

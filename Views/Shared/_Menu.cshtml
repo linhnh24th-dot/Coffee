@@ -5,7 +5,10 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
             <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
-                <h1 class="m-0 text-primary"><i class="fa fa-mug-hot me-2"></i>HyliCoffee</h1>
+                <h1 class="m-0 text-primary d-flex align-items-center">
+                    <img src="~/img/logo.jpg" alt="Logo" class="me-2" style="height: 40px; width: auto; object-fit: contain;" />
+                    HyliCoffee
+                </h1>
             </a>
             <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
@@ -13,25 +16,29 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto">
                     <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-item nav-link">Home</a>
-                    <a asp-area="" asp-controller="Home" asp-action="About" class="nav-item nav-link">About</a>
+                    <a asp-area="" asp-controller="Home" asp-action="News" class="nav-item nav-link">News</a>
                     <a asp-area="" asp-controller="Product" asp-action="Index" class="nav-item nav-link">Products</a>
                     <a asp-area="" asp-controller="Product" asp-action="Store" class="nav-item nav-link">Store</a>
                     <a asp-area="" asp-controller="Home" asp-action="Contact" class="nav-item nav-link">Contact</a>
                     @if (User.Identity != null && User.Identity.IsAuthenticated)
-                    {
-                        if (User.IsInRole("Admin"))
-                        {
-                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="nav-item nav-link text-warning">Admin Panel</a>
-                        }
-                        <a asp-area="" asp-controller="Order" asp-action="History" class="nav-item nav-link">Đơn hàng của tôi</a>
-                        <a asp-area="" asp-controller="Account" asp-action="Logout" class="nav-item nav-link">
-                            Đăng xuất (@User.FindFirst("FullName")?.Value)
-                        </a>
-                    }
+{
+    if (User.IsInRole("Admin"))
+    {
+        <!-- Sửa Admin Panel thành Admin -->
+                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="nav-item nav-link text-warning">Admin</a>
+    }
+ <!-- Sửa Đơn hàng của tôi thành Đơn hàng -->
+                    <a asp-area="" asp-controller="Order" asp-action="History" class="nav-item nav-link">Đơn hàng</a>
+
+ <!-- Sửa Đăng xuất (Tên Admin) thành chữ Đăng xuất ngắn gọn -->
+                    <a asp-area="" asp-controller="Account" asp-action="Logout" class="nav-item nav-link" title="Đăng xuất khoản (@User.FindFirst("FullName")?.Value)">
+                        Đăng xuất
+                    </a>
+}
                     else
                     {
-                        <a asp-area="" asp-controller="Account" asp-action="Login" class="nav-item nav-link">Đăng nhập</a>
-                        <a asp-area="" asp-controller="Account" asp-action="Register" class="nav-item nav-link">Đăng ký</a>
+                    <a asp-area="" asp-controller="Account" asp-action="Login" class="nav-item nav-link">Đăng nhập</a>
+                    <a asp-area="" asp-controller="Account" asp-action="Register" class="nav-item nav-link">Đăng ký</a>
                     }
                 </div>
                 <div class="border-start ps-4 d-none d-lg-block">

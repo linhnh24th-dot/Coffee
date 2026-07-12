@@ -1,28 +1,42 @@
 @model List<Feedback>
-@{
+    @{
     ViewData["Title"] = "Phản hồi khách hàng";
-}
-<div class="card">
-    <div class="card-body p-0">
-        <table class="table table-striped mb-0">
-            <thead><tr><th>#</th><th>Tên</th><th>Email</th><th>Nội dung</th><th>Ngày gửi</th><th style="width:80px"></th></tr></thead>
-            <tbody>
-                @foreach (var f in Model)
+    }
+    <div class="card">
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên</th>
+                        <th>Email</th>
+                        <th>Nội dung</th>
+                        <th>Ngày gửi</th>
+                        <th style="width:80px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                    int stt = 1; // 1. Khởi tạo biến đếm bắt đầu từ 1
+                    }
+                    @foreach (var f in Model)
                 {
                     <tr>
-                        <td>@f.Id</td>
+                        <td>@stt</td> <!-- 2. Thay đổi từ @f.Id sang @stt -->
                         <td>@f.Name</td>
                         <td>@f.Email</td>
                         <td>@f.Content</td>
                         <td>@f.CreatedDate.ToString("dd/MM/yyyy HH:mm")</td>
                         <td>
+                            @* Nút Xóa vẫn giữ nguyên asp-route-id="@f.Id" để xử lý đúng phản hồi *@
                             <form asp-area="Admin" asp-controller="Feedback" asp-action="Delete" asp-route-id="@f.Id" method="post" onsubmit="return confirm('Xóa phản hồi này?');">
                                 <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
                             </form>
                         </td>
                     </tr>
+                    stt++; // 3. Tăng biến đếm lên 1 sau mỗi dòng được render
                 }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>

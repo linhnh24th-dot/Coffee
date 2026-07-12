@@ -1,19 +1,22 @@
 @model List<Article>
-@{
+    @{
     ViewData["Title"] = "Quản lý tin tức";
-}
-<div class="mb-3">
-    <a asp-area="Admin" asp-controller="Article" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>Thêm tin tức</a>
-</div>
-<div class="card">
-    <div class="card-body p-0">
-        <table class="table table-striped mb-0">
-            <thead><tr><th>#</th><th>Ảnh</th><th>Tiêu đề</th><th>Chuyên mục</th><th>Ngày tạo</th><th style="width:150px"></th></tr></thead>
-            <tbody>
-                @foreach (var a in Model)
+    }
+    <div class="mb-3">
+        <a asp-area="Admin" asp-controller="Article" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>Thêm tin tức</a>
+    </div>
+    <div class="card">
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead><tr><th>#</th><th>Ảnh</th><th>Tiêu đề</th><th>Chuyên mục</th><th>Ngày tạo</th><th style="width:150px"></th></tr></thead>
+                <tbody>
+                    @{
+                    int stt = 1; // 1. Khai báo biến đếm bắt đầu từ 1
+                    }
+                    @foreach (var a in Model)
                 {
                     <tr>
-                        <td>@a.Id</td>
+                        <td>@stt</td> <!-- 2. Sửa @a.Id thành @stt ở đây -->
                         <td><img src="~/img/@(a.Image ?? "article.jpg")" width="50" /></td>
                         <td>@a.Title</td>
                         <td>@a.Category</td>
@@ -25,8 +28,10 @@
                             </form>
                         </td>
                     </tr>
+
+                    stt++; // 3. Tăng biến đếm lên 1 đơn vị sau mỗi vòng lặp
                 }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>

@@ -1,33 +1,52 @@
 @model List<Staff>
-@{
+    @{
     ViewData["Title"] = "Quản lý nhân viên";
-}
-<div class="mb-3">
-    <a asp-area="Admin" asp-controller="Staff" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>Thêm nhân viên</a>
-</div>
-<div class="card">
-    <div class="card-body p-0">
-        <table class="table table-striped mb-0">
-            <thead><tr><th>#</th><th>Họ tên</th><th>SĐT</th><th>Ca làm</th><th>Vị trí</th><th>Lương</th><th style="width:150px"></th></tr></thead>
-            <tbody>
-                @foreach (var s in Model)
+    }
+    <div class="mb-3">
+        <a asp-area="Admin" asp-controller="Staff" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>Thêm nhân viên</a>
+    </div>
+    <div class="card">
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Họ tên</th>
+                        <th>SĐT</th>
+                        <th>Ca làm</th>
+                        <th>Vị trí</th>
+                        <th>Lương</th>
+                        <th style="width:150px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                    int stt = 1; // 1. Khởi tạo biến đếm số thứ tự bắt đầu từ 1
+                    }
+                    @foreach (var s in Model)
                 {
                     <tr>
-                        <td>@s.Id</td>
+                        <td>@stt</td> <!-- 2. Thay đổi từ @s.Id sang @stt -->
                         <td>@s.Name</td>
                         <td>@s.Phone</td>
                         <td>@s.Shift</td>
                         <td>@s.Position</td>
                         <td>@s.Salary.ToString("N0") VND</td>
                         <td>
-                            <a asp-area="Admin" asp-controller="Staff" asp-action="Edit" asp-route-id="@s.Id" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i></a>
+                            @* Nút Sửa và Xóa vẫn giữ nguyên asp-route-id="@s.Id" để xử lý đúng nhân viên *@
+                            <a asp-area="Admin" asp-controller="Staff" asp-action="Edit" asp-route-id="@s.Id" class="btn btn-sm btn-primary">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
                             <form asp-area="Admin" asp-controller="Staff" asp-action="Delete" asp-route-id="@s.Id" method="post" class="d-inline" onsubmit="return confirm('Xóa nhân viên này?');">
-                                <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i>
+                                </button>
                             </form>
                         </td>
                     </tr>
+                    stt++; // 3. Tăng số thứ tự lên 1 sau mỗi dòng được render
                 }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>

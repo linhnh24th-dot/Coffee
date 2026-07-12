@@ -33,9 +33,11 @@ namespace HyliCoffeeWeb.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult News()
         {
-            return View();
+            // Lấy danh sách tin tức từ database, xếp tin mới nhất lên đầu
+            var articles = _context.Articles.OrderByDescending(a => a.CreatedDate).ToList();
+            return View(articles);
         }
 
         [HttpGet]

@@ -53,5 +53,25 @@ namespace HyliCoffeeWeb.Areas.Admin.Controllers
             TempData["SuccessMessage"] = "Đã cập nhật trạng thái đơn hàng.";
             return RedirectToAction(nameof(Details), new { id });
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            // 1. Tìm và xóa hết Chi tiết đơn hàng liên quan trước để không bị lỗi khóa ngoại
+            var orderDetails = _context.OrderDetails.Where(od => od.OrderId == id);
+            _context.OrderDetails.RemoveRange(orderDetails);
+
+            // 2. Tìm và xóa Đơn hàng chính
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null) return NotFound();
+
+            _context.Orders.Remove(order);
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Đã xóa đơn hàng thành công.";
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
+    
+
