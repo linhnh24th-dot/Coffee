@@ -21,6 +21,32 @@ namespace HyliCoffeeWeb.Areas.Admin.Controllers
         // GET /Admin (Admin/Dashboard/Index) -> tương ứng admin/index.html
         public async Task<IActionResult> Index()
         {
+            // --- PHẦN THÊM MỚI: Tính toán doanh thu theo từng tháng của năm hiện tại ---
+            int currentYear = DateTime.Now.Year;
+
+            var monthlyData = await _context.Orders
+                .Where(o => o.OrderDate.Year == currentYear && o.Status == OrderStatus.HoanThanh)
+                .GroupBy(o => o.OrderDate.Month)
+                .Select(g => new
+                {
+                    Month = g.Key,
+                    Total = g.Sum(o => o.Total)
+                })
+                .ToListAsync();
+
+            // Khởi tạo mảng 12 phần tử tương ứng 12 tháng (mặc định bằng 0)
+            decimal[] revenueArray = new decimal[12];
+            foreach (var item in monthlyData)
+            {
+                revenueArray[item.Month - 1] = item.Total;
+            }
+
+            // Gửi dữ liệu sang View bằng ViewBag
+            ViewBag.MonthlyRevenue = revenueArray;
+            ViewBag.CurrentYear = currentYear;
+            // -------------------------------------------------------------------------
+
+            // Giữ nguyên ViewModel cũ của bạn
             var vm = new DashboardViewModel
             {
                 TotalProducts = await _context.Products.CountAsync(),
