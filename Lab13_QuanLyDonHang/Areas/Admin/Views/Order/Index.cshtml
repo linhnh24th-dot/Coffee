@@ -1,0 +1,46 @@
+@model List<Order>
+    @{
+    ViewData["Title"] = "Quản lý đơn hàng";
+    }
+    <div class="card">
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Mã</th>
+                        <th>Khách hàng</th>
+                        <th>SĐT</th>
+                        <th>Ngày đặt</th>
+                        <th>Trạng thái</th>
+                        <th>Tổng tiền</th>
+                        <th style="width:120px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                    int stt = 1; // 1. Tạo biến đếm bắt đầu từ 1
+                    }
+                    @foreach (var o in Model)
+                {
+                    <tr>
+                        <td>#@stt</td> <!-- 2. Thay thế #@o.Id bằng #@stt -->
+                        <td>@o.Receiver</td>
+                        <td>@o.Phone</td>
+                        <td>@o.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td><span class="badge text-bg-info">@o.Status</span></td>
+                        <td>@o.Total.ToString("N0") VND</td>
+                        <td>
+                            @* Nút Chi tiết và Xóa vẫn giữ nguyên asp-route-id="@o.Id" để xử lý đúng đơn hàng *@
+                            <a asp-area="Admin" asp-controller="Order" asp-action="Details" asp-route-id="@o.Id" class="btn btn-sm btn-primary">Chi tiết</a>
+
+                            <form asp-area="Admin" asp-controller="Order" asp-action="Delete" asp-route-id="@o.Id" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa vĩnh viễn đơn hàng này không?');" style="display:inline; margin-left: 5px;">
+                                <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                    stt++; // 3. Tăng biến đếm lên 1 sau mỗi dòng
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
