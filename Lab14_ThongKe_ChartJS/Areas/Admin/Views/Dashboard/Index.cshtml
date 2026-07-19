@@ -1,0 +1,188 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<!-- 1. Hàng Thẻ Thống Kê (KPI Cards) -->
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <div class="small-box text-bg-primary">
+            <div class="inner">
+                <h3>@Model.TotalProducts</h3>
+                <p>Sản phẩm</p>
+            </div>
+            <i class="bi bi-cup-hot small-box-icon"></i>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box text-bg-success">
+            <div class="inner">
+                <h3>@Model.TotalOrders</h3>
+                <p>Đơn hàng (@Model.PendingOrders chờ xử lý)</p>
+            </div>
+            <i class="bi bi-receipt small-box-icon"></i>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box text-bg-warning">
+            <div class="inner">
+                <h3>@Model.TotalUsers</h3>
+                <p>Khách hàng</p>
+            </div>
+            <i class="bi bi-people small-box-icon"></i>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box text-bg-danger">
+            <div class="inner">
+                <h3>@Model.TotalRevenue.ToString("N0")</h3>
+                <p>Doanh thu (VND, đơn hoàn thành)</p>
+            </div>
+            <i class="bi bi-cash-coin small-box-icon"></i>
+        </div>
+    </div>
+</div>
+
+<!-- 2. Hàng Biểu Đồ Doanh Thu -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card card-outline card-primary shadow">
+            <div class="card-header">
+                <h3 class="card-title font-weight-bold" style="color: #0d6efd;">
+                    <i class="bi bi-bar-chart-line-fill me-1"></i> Doanh thu theo tháng (Năm @ViewBag.CurrentYear)
+                </h3>
+            </div>
+            <div class="card-body">
+                <div style="height: 320px; width: 100%; position: relative;">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. Hàng Bảng Số Liệu Chi Tiết (Đơn hàng & Phản hồi) -->
+<div class="row">
+    <!-- Cột bên trái: Đơn hàng gần đây -->
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-header"><h3 class="card-title">Đơn hàng gần đây</h3></div>
+            <div class="card-body p-0">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Mã</th>
+                            <th>Khách hàng</th>
+                            <th>Ngày đặt</th>
+                            <th>Trạng thái</th>
+                            <th>Tổng tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int stt = 1;
+                        }
+                        @foreach (var o in Model.RecentOrders)
+                        {
+                        <tr>
+                            <td><a asp-area="Admin" asp-controller="Order" asp-action="Details" asp-route-id="@o.Id">#@stt</a></td>
+                            <td>@o.User?.FullName</td>
+                            <td>@o.OrderDate.ToString("dd/MM/yyyy")</td>
+                            <td>@o.Status</td>
+                            <td>@o.Total.ToString("N0") VND</td>
+                        </tr>
+                            stt++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cột bên phải: Phản hồi mới nhất -->
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header"><h3 class="card-title">Phản hồi mới nhất</h3></div>
+            <div class="card-body p-0">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Khách hàng</th>
+                            <th>Nội dung</th>
+                            <th>Ngày gửi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RecentFeedbacks != null && Model.RecentFeedbacks.Any())
+                        {
+                        @foreach (var f in Model.RecentFeedbacks)
+                            {
+                        <tr>
+                            <td><strong>@f.Name</strong></td>
+                            <td>@f.Content</td>
+                            <td>@f.CreatedDate.ToString("dd/MM HH:mm")</td>
+                        </tr>
+                            }
+                        }
+                        else
+                        {
+                        <tr>
+                            <td colspan="3" class="text-center p-3 text-muted">Không có phản hồi mới.</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 4. Phần vẽ biểu đồ JavaScript -->
+@section Scripts {
+    <!-- Nhúng thư viện Chart.js để vẽ biểu đồ -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Nhận dữ liệu mảng doanh thu từ Controller gửi qua ViewBag
+        var revenueData = @Json.Serialize(ViewBag.MonthlyRevenue);
+
+        // Vẽ biểu đồ cột (Bar Chart)
+        var ctx = document.getElementById('revenueChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                datasets: [{
+                    label: 'Doanh thu (VND)',
+                    data: revenueData,
+                    backgroundColor: 'rgba(13, 110, 253, 0.75)', // Màu xanh primary đồng bộ
+                    borderColor: 'rgba(13, 110, 253, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString('vi-VN') + ' đ';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'Doanh thu: ' + context.parsed.y.toLocaleString('vi-VN') + ' đ';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}
