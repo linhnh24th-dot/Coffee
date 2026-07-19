@@ -1,0 +1,45 @@
+@model List<Product>
+    @{
+    ViewData["Title"] = "Quản lý sản phẩm";
+    int stt = 1; // 1. Khởi tạo biến đếm STT từ số 1
+    }
+    <div class="mb-3">
+        <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>Thêm sản phẩm</a>
+    </div>
+    <div class="card">
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th>Ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Loại</th>
+                        <th>Giá</th>
+                        <th>Nổi bật</th>
+                        <th style="width: 150px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model)
+                {
+                    <tr>
+                        <td>@stt</td> <!-- 2. Đổi từ @p.Id thành @stt để hiển thị số liên tục -->
+                        <td><img src="~/img/@(p.Image ?? "cfden.jpg")" width="50" /></td>
+                        <td>@p.Name</td>
+                        <td>@p.Type</td>
+                        <td>@p.Price.ToString("N0") VND</td>
+                        <td>@(p.Featured ? "✔" : "")</td>
+                        <td>
+                            <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@p.Id" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i></a>
+                            <form asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@p.Id" method="post" class="d-inline" onsubmit="return confirm('Xóa sản phẩm này?');">
+                                <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    stt++; // 3. Tăng số thứ tự lên 1 sau mỗi lần lặp sản phẩm
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
