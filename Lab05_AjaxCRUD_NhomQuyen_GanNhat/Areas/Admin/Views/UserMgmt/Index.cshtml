@@ -1,0 +1,52 @@
+@model List<User>
+    @{
+    ViewData["Title"] = "Quản lý tài khoản";
+    }
+    <div class="mb-3">
+        <a asp-area="Admin" asp-controller="UserMgmt" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>Thêm tài khoản</a>
+    </div>
+    <div class="card">
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Username</th>
+                        <th>Họ tên</th>
+                        <th>SĐT</th>
+                        <th>Email</th>
+                        <th>Vai trò</th>
+                        <th style="width:150px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                    int stt = 1; // 1. Khởi tạo biến đếm bắt đầu từ 1
+                    }
+                    @foreach (var u in Model)
+                {
+                    <tr>
+                        <td>@stt</td> <!-- 2. Thay đổi từ @u.Id sang @stt -->
+                        <td>@u.Username</td>
+                        <td>@u.FullName</td>
+                        <td>@u.Phone</td>
+                        <td>@u.Email</td>
+                        <td><span class="badge @(u.Role == UserRole.Admin ? "text-bg-danger" : "text-bg-secondary")">@u.Role</span></td>
+                        <td>
+                            @* Các nút Sửa và Xóa vẫn giữ nguyên asp-route-id="@u.Id" để xử lý đúng tài khoản *@
+                            <a asp-area="Admin" asp-controller="UserMgmt" asp-action="Edit" asp-route-id="@u.Id" class="btn btn-sm btn-primary">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <form asp-area="Admin" asp-controller="UserMgmt" asp-action="Delete" asp-route-id="@u.Id" method="post" class="d-inline" onsubmit="return confirm('Xóa tài khoản này?');">
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    stt++; // 3. Tăng biến đếm lên 1 sau mỗi dòng
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
